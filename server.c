@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
     
     int client_cnt, max_num_clients;
     int max_fd, sock_fd, listen_fd, new_com;
-    int portnum;
+    int portnum, i, l, m, n, c;
     char *c, *d;
 
     sock_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]){
             exit(1);
         }
 
-        for(int i=0; i<=max_fd; i++){
+        for(i=0; i<=max_fd; i++){
 
             if(FD_ISSET(i, &temp_fd)){
 
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
                             if(Mess_from->Attr.Type == 2){
                                 if(client_cnt <= max_num_clients -1){
                                     int f = 1;
-                                    for(int m = 4; m <= max_fd; m++){
+                                    for(m = 4; m <= max_fd; m++){
                                         if(strcmp(Mess_from->Attr.Payload, names[m])==0){
                                             f=0;
                                             Mess_to = malloc(sizeof(struct Messages));
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]){
                                             //others are online so update array with different welcome message
                                             strcpy(who_is_online, "Howdy! There are others online");
                                         }
-                                        for(int n = 4; n<max_fd; n++){
+                                        for(n = 4; n<max_fd; n++){
                                             if(n!=i){
                                                 if(n!=sock_fd){
                                                     if(client_cnt != 1){
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]){
                             if(Mess_from->Attr.Type==4){
                                 //print message
                                 sprintf(Mess_from, "%s - %s", names[i], Mess_from->Attr.Payload);
-                                for(int c=0; c<max_fd; c++){
+                                for(c=0; c<max_fd; c++){
                                     if(FD_ISSET(c, &master_fd)){
                                         if(c!=i){
                                             if(c!=sock_fd){
@@ -208,7 +208,7 @@ int main(int argc, char *argv[]){
                             printf("The client side has ended");
                             names[i][0]='\0';
 
-                            for(int l=0; l<=max_fd; l++){
+                            for(l=0; l<=max_fd; l++){
                                 if(FD_ISSET(l, &master_fd)){
                                     if(l!=i){
                                         if(l!=sock_fd){
@@ -231,26 +231,6 @@ int main(int argc, char *argv[]){
                     }
                 }
             }
-        }
-        
-    }
-}
-
-void new_connection(int client_cnt, int max_num_clients, int sock_fd, int max_fd, int master_fd){
-    if(client_cnt < max_num_clients){
-        int new_com = accept(sock_fd, (struct sockaddr*)NULL, NULL);
-
-        //check for error
-        if(new_com == -1){
-            perror("");
-        }else{
-            FD_SET(new_com, &master_fd);
-            //reset max
-            if(new_com > max_fd){
-                max_fd = new_com;
-            }
-            client_cnt++;
-                printf("print server");
         }
         
     }
