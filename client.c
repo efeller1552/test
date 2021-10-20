@@ -28,6 +28,7 @@ int main(int argc, char *argv[]){
     struct Messages *Mess_from;
     char message[512];
     int len_of_ip, readingbytes;
+    int i;
 
     int sock_fd, connection;
     char *c;
@@ -85,7 +86,7 @@ int main(int argc, char *argv[]){
             exit(6);
         }
 
-        for(int i=0; i<=sock_fd; i++){
+        for(i=0; i<=sock_fd; i++){
             if(FD_ISSET(i, &temp_fd)){
                 if(i==0){
                     bzero(message, 512);
