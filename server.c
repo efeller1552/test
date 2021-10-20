@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
     int client_cnt, max_num_clients;
     int max_fd, sock_fd, listen_fd, new_com;
     int portnum, i, l, m, n, c;
-    char *c, *d;
+    char *char1, *char2;
 
     sock_fd = socket(AF_INET, SOCK_STREAM, 0);
     //check for error
@@ -36,8 +36,8 @@ int main(int argc, char *argv[]){
         perror("socket error");
     }
 
-    portnum = strtol(argv[1], &c, 10);
-    max_num_clients = strtol(argv[2], &d, 10);
+    portnum = strtol(argv[1], &char1, 10);
+    max_num_clients = strtol(argv[2], &char2, 10);
 
     struct Messages *Mess_to;
     struct Messages *Mess_from;
